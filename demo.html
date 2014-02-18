@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" media="all" href="lib/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="mab-jquery-taginput.css" />
+        <style type="text/css">
+            .narrow {
+                width: 300px !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Static navbar -->
+            <div class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Demo</a>
+                </div>
+            </div>
+            <form action="" method="post" role="form">
+                <div class="form-group">
+                    <label for="tags1">Empty</label>
+                    <input type="text" class="form-control tag-input" name="tags1" id="tags1" placeholder="Enter tags" value="">
+                </div>
+                <div class="form-group">
+                    <label for="tags2">Pre-populated</label>
+                    <input type="text" class="form-control tag-input" name="tags2" id="tags2" placeholder="Enter tags" value="cat|dog|catfish|fish">
+                </div>
+                <div class="form-group">
+                    <label for="tags2">Multi-line</label>
+                    <input type="text" class="form-control tag-input narrow" name="tags3" id="tags3" placeholder="Enter tags" value="cat|catfish|dog|dogfish|fish">
+                </div>
+            </form>
+        </div> <!-- /container -->
+        <script type="text/javascript" src="lib/js/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/js/typeahead.bundle.min.js"></script>
+        <script type="text/javascript" src="mab-jquery-taginput.js"></script>
+        <script type="text/javascript">
+
+            $(function(){
+
+                // Instantiate the Bloodhound suggestion engine
+                var tags = new Bloodhound({
+                    datumTokenizer: function(d) { return Bloodhound.tokenizers.whitespace(d.tag); },
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    local: [
+                        { tag: 'dog' },
+                        { tag: 'cat' },
+                        { tag: 'fish' },
+                        { tag: 'catfish' },
+                        { tag: 'dogfish' }
+                    ]
+                });
+
+                tags.initialize();
+
+                $('.tag-input').tagInput({
+                    allowDuplicates: false,
+                    typeahead: true,
+                    typeaheadOptions: {
+                        displayKey: 'tag',
+                        source: tags.ttAdapter()
+                    }
+                });
+
+                $('#results a[rel="external"]').attr('target', '_blank');
+
+            });
+
+        </script>
+    </body>
+</html>
