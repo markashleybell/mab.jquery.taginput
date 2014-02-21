@@ -3,7 +3,7 @@
     <head>
         <title>Demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" type="text/css" media="all" href="lib/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" media="all" href="lib/css/bootstrap.css" />
         <link rel="stylesheet" type="text/css" media="all" href="mab-jquery-taginput.css" />
         <style type="text/css">
             .narrow {
@@ -40,20 +40,9 @@
                 </div>
             </form>
         </div> <!-- /container -->
-
-        <span class="tt-dropdown-menu">
-            <div class="tt-dataset-1">
-              <span class="tt-suggestions">
-                <div class="tt-suggestion">Suggestion1</div>
-                <div class="tt-suggestion">Suggestion2</div>
-                <div class="tt-suggestion">Suggestion3</div>
-              </span>
-            </div>
-        </span>
-
         <script type="text/javascript" src="lib/js/jquery.min.js"></script>
-        <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="lib/js/typeahead.bundle.min.js"></script>
+        <script type="text/javascript" src="lib/js/bootstrap.js"></script>
+        <script type="text/javascript" src="lib/js/typeahead.bundle.js"></script>
         <script type="text/javascript" src="mab-jquery-taginput.js"></script>
         <script type="text/javascript">
 
@@ -78,6 +67,9 @@
                     allowDuplicates: false,
                     typeahead: true,
                     typeaheadOptions: {
+                        highlight: true
+                    },
+                    typeaheadDatasetOptions: {
                         displayKey: 'tag',
                         source: tags.ttAdapter()
                     }
