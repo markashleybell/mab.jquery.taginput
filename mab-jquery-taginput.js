@@ -13,7 +13,8 @@
             tagDataSeparator: '|',
             allowDuplicates: false,
             typeahead: false,
-            typeaheadOptions: {}
+            typeaheadOptions: null,
+            typeaheadDatasetOptions: null
         },
         // Lookup variables to make keycode handling more readable
         KEYCODES = {
@@ -65,8 +66,8 @@
     };
 
     // Shortcut function to clear text from the tag input and close the typeahead
-    var _resetTagInput = function(input, usingTypeAhead) {
-        if(usingTypeAhead) {
+    var _resetTagInput = function(input, usingTypeahead) {
+        if(usingTypeahead) {
             input.typeahead('val', '');
             input.typeahead('close');
         } else {
@@ -101,7 +102,7 @@
 
         init: function() {
             // Boolean to determine whether typeahead.js integration is enabled
-            var usingTypeAhead = this.options.typeahead;
+            var usingTypeahead = this.options.typeahead;
             // boolean to determine whether the same tag can be added to the input more than once
             var allowDuplicates = this.options.allowDuplicates;
             // Character to use as a separator for the tag data (default is pipe '|')
@@ -120,8 +121,8 @@
             var originalPlaceHolder = tagInput.attr('placeholder');
 
             // Set up the typeahead if specified
-            if(usingTypeAhead)
-                tagInput.typeahead(null, this.options.typeaheadOptions);
+            if(usingTypeahead)
+                tagInput.typeahead(this.options.typeaheadOptions, this.options.typeaheadDatasetOptions);
                 
             // Handle keydown events on the tag text input
             tagInput.on('keydown', function(e) {
@@ -142,7 +143,7 @@
                         tagData.before('<span class="label label-primary" data-tag="' + newTag + '">' + newTag + ' <span class="glyphicon glyphicon-remove"></span></span>');
                         _addTagToDataField(tagData, separator, newTag);
                         // Reset the tag input
-                        _resetTagInput(input, usingTypeAhead);
+                        _resetTagInput(input, usingTypeahead);
                         input.attr('placeholder', '');
                     } else {
                         // Highlight the duplicate tag
@@ -160,7 +161,7 @@
                     tagData.prev('span.label').remove();
                     _removeLastTagFromDataField(tagData, separator);
                     // Reset the tag input
-                    _resetTagInput(input, usingTypeAhead);
+                    _resetTagInput(input, usingTypeahead);
                     if(tagData.val() === '')
                         input.attr('placeholder', originalPlaceHolder);
                 }
@@ -177,13 +178,13 @@
                 if(tagData.val() !== '')
                     tagInputContainer.find('input[type=text]').addClass('h');
                 // Reset the tag input
-                _resetTagInput(tagInput, usingTypeAhead);
+                _resetTagInput(tagInput, usingTypeahead);
             });
 
             // Focus the text input when the control container is clicked, which triggers
             // the show/hide behaviours defined in the handlers above
             tagInputContainer.on('click', function(e) {
-                if(usingTypeAhead)
+                if(usingTypeahead)
                     tagInputContainer.find('input[type=text].tt-input').focus();
                 else
                     tagInputContainer.find('input[type=text]').focus();
