@@ -12,9 +12,14 @@ test('inherits original classes', function() {
     equal(test2Classes[1], 'test3', 'test input 2 has class \'test3\' at index 1');
 });
 
-// test('', function() {
-    
-// });
+test('inherits placeholder attribute', function() {
+    var placeholder1 = $('#test-input-1').parent().find('.mab-jquery-taginput-input').first().is('[placeholder]');
+    var placeholder2 = $('#test-input-2').parent().find('.mab-jquery-taginput-input').first().attr('placeholder');
+    var placeholder3 = $('#test-input-3').parent().find('.mab-jquery-taginput-input').first().attr('placeholder');
+    equal(placeholder1, 0, 'test input 1 does not have a placeholder attribute');
+    equal(placeholder2, '', 'test input 2 has blank placeholder attribute because value is populated');
+    equal(placeholder3, 'Enter tags', 'test input 3 placeholder attribute equals "Enter tags"');
+});
 
 QUnit.done(function() {
     // alert('test');

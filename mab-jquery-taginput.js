@@ -61,7 +61,7 @@
         return $('<div class="mab-jquery-taginput' + ((input.attr('class')) ? ' ' + input.attr('class') : '') + '">' + 
                  tagLabels + 
                  '<input class="mab-jquery-taginput-data" type="hidden" name="' + input.attr('name') + '" id="' + input.attr('name') + '" value="' + input.val() + '">' +
-                 '<input class="mab-jquery-taginput-input" type="text" placeholder="' + input.attr('placeholder') + '">' + 
+                 '<input class="mab-jquery-taginput-input" type="text"' + (input.is('[placeholder]') ? ' placeholder="' + input.attr('placeholder') : '') + '">' + 
                  '</div>');
     };
 
