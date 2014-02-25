@@ -21,6 +21,9 @@ test('inherits placeholder attribute', function() {
     equal(placeholder3, 'Enter tags', 'test input 3 placeholder attribute equals "Enter tags"');
 });
 
+test('correctly handles separator chars in tags', function() {
+});
+
 QUnit.done(function() {
     // alert('test');
 });
