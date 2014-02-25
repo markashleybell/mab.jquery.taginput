@@ -22,6 +22,20 @@ test('inherits placeholder attribute', function() {
 });
 
 test('correctly handles separator chars in tags', function() {
+    var tag1 = $('#test-input-4').parent().find('span.label:contains("true|false")').length;
+
+    var input = $('#test-input-5').parent().find('.mab-jquery-taginput-input').first();
+
+    var e = $.Event('keydown');
+    e.keyCode = e.which = 13; // ENTER
+
+    input.val('true|false');
+    input.trigger(e);
+
+    var data1 = $('#test-input-5').val().split('|').pop();
+
+    equal(tag1, 1, 'test input 4 contains a tag with the text \'true|false\'');
+    equal(data1, 'true~false', 'test input 5 data contains the value \'true~false\'');
 });
 
 QUnit.done(function() {
