@@ -8,7 +8,7 @@
 ;(function ( $, window, document, undefined ) {
 
     // Create the defaults once
-    var pluginName = "tagInput",
+    var pluginName = 'tagInput',
         defaults = {
             tagDataSeparator: '|',
             allowDuplicates: false,
@@ -124,6 +124,14 @@
             if(usingTypeahead)
                 tagInput.typeahead(this.options.typeaheadOptions, this.options.typeaheadDatasetOptions);
                 
+            // Handle keypress in the tag text input
+            tagInput.on('keypress', function(e) {
+                // If someone tries to type the character we're using as a data separator, 
+                // don't let them! This avoids tags being unexpectedly split when they are saved.
+                if(e.keyCode == separator.charCodeAt(0))
+                    return false;
+            });
+
             // Handle keydown events on the tag text input
             tagInput.on('keydown', function(e) {
                 // Cache the reference to the input
