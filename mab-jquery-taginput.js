@@ -14,7 +14,8 @@
             allowDuplicates: false,
             typeahead: false,
             typeaheadOptions: null,
-            typeaheadDatasetOptions: null
+            typeaheadDatasetOptions: null,
+            callback: function(){}
         },
         // Lookup variables to make keycode handling more readable
         KEYCODES = {
@@ -132,6 +133,9 @@
                     return false;
             });
 
+            //for callback
+            var that = this;
+
             // Handle keydown events on the tag text input
             tagInput.on('keydown', function(e) {
                 // Cache the reference to the input
@@ -153,6 +157,7 @@
                         // Reset the tag input
                         _resetTagInput(input, usingTypeahead);
                         input.attr('placeholder', '');
+                        that.options.callback.call(newTag,tagData.val());
                     } else {
                         // Highlight the duplicate tag
                         var existing = tagInputContainer.find('span.label[data-tag="' + newTag + '"]');
@@ -166,12 +171,15 @@
                 // we don't want to prevent the default action, which is deleting a character)
                 if(e.keyCode == KEYCODES.BACKSPACE && $.trim(input.val()) === '') {
                     // Remove the last tag span before the hidden data input
+                    var tagRemoved = tagData.prev('span.label').text();
                     tagData.prev('span.label').remove();
+
                     _removeLastTagFromDataField(tagData, separator);
                     // Reset the tag input
                     _resetTagInput(input, usingTypeahead);
                     if(tagData.val() === '')
                         input.attr('placeholder', originalPlaceHolder);
+                    that.options.callback.call(tagRemoved,tagData.val());
                 }
             });
 
@@ -208,6 +216,7 @@
                 var tagText = $.trim(tag.text());
                 _removeTagFromDataField(tagData, separator, tagText);
                 tag.remove();
+                that.options.callback.call(tagText,tagData.val());
             });
 
             // If the control already has some tags in it
