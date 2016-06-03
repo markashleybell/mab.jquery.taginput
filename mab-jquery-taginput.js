@@ -55,15 +55,18 @@
     // Function to create the HTML representing the tag input control
     var _createTagInput = function(input, tagDataSeparator) {
         var tags = _cleanArray(input.val().split(tagDataSeparator));
-        var tagLabels = $.map(tags, function(tag, index) {
-            return '<span class="label label-primary" data-tag="' + tag + '">' + tag + ' <span class="glyphicon glyphicon-remove"></span></span>';
-        }).join('');
+        var tagLabels = $.map(tags, _createTag).join('');
 
         return $('<div class="mab-jquery-taginput' + ((input.attr('class')) ? ' ' + input.attr('class') : '') + '">' + 
                  tagLabels + 
                  '<input class="mab-jquery-taginput-data" type="hidden" name="' + input.attr('name') + '" id="' + input.attr('name') + '" value="' + input.val() + '">' +
                  '<input class="mab-jquery-taginput-input" type="text"' + (input.is('[placeholder]') ? ' placeholder="' + input.attr('placeholder') : '') + '">' + 
                  '</div>');
+    };
+
+    // Create HTML representing a tag
+    var _createTag = function(tag) {
+        return '<span class="label label-primary" data-tag="' + tag + '">' + tag + ' <span class="glyphicon glyphicon-remove"></span></span>';
     };
 
     // Shortcut function to clear text from the tag input and close the typeahead
@@ -154,7 +157,7 @@
                         // Preserve current data for callback
                         var tagDataCurrent = tagData.val();
                         // Insert a new tag span before the hidden input
-                        tagData.before('<span class="label label-primary" data-tag="' + newTag + '">' + newTag + ' <span class="glyphicon glyphicon-remove"></span></span>');
+                        tagData.before(_createTag(newTag));
                         _addTagToDataField(tagData, separator, newTag);
                         // Reset the tag input
                         _resetTagInput(input, usingTypeahead);
