@@ -140,12 +140,12 @@
             var that = this;
 
             // Handle keydown events on the tag text input
-            tagInput.on('keydown', function(e) {
+            tagInput.on('keydown typeahead:selected', function(e) {
                 // Cache the reference to the input
                 var input = $(this);
                 // If enter is hit, and the input is *not* empty (if the input *is* empty, 
                 // we don't want to prevent the default action, which is submitting the form)
-                if(e.keyCode == KEYCODES.ENTER && $.trim(input.val()) !== '') {
+                if(e.type === 'typeahead:selected' || (e.keyCode == KEYCODES.ENTER && $.trim(input.val()) !== '')) {
                     // Stop the form being submitted and prevent event bubbling
                     e.preventDefault();
                     e.stopPropagation();
@@ -167,6 +167,8 @@
                         // Highlight the duplicate tag
                         var existing = tagInputContainer.find('span.label[data-tag="' + newTag + '"]');
                         existing.removeClass('label-primary').addClass('label-danger');
+                        // Reset the tag input
+                        _resetTagInput(input, usingTypeahead);
                         setTimeout(function() {
                             existing.removeClass('label-danger').addClass('label-primary');
                         }, 1500);
