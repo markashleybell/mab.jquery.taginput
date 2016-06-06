@@ -162,7 +162,7 @@
                         // Reset the tag input
                         _resetTagInput(input, usingTypeahead);
                         input.attr('placeholder', '');
-                        that.options.callback.call(tagDataCurrent, tagData.val(), newTag, null);
+                        that.options.callback.call(tagData, tagDataCurrent, tagData.val(), newTag, null);
                     } else {
                         // Highlight the duplicate tag
                         var existing = tagInputContainer.find('span.label[data-tag="' + newTag + '"]');
@@ -188,7 +188,7 @@
                     _resetTagInput(input, usingTypeahead);
                     if(tagData.val() === '')
                         input.attr('placeholder', originalPlaceHolder);
-                    that.options.callback.call(tagDataCurrent, tagData.val(), null, tagRemoved);
+                    that.options.callback.call(tagData, tagDataCurrent, tagData.val(), null, tagRemoved);
                 }
             });
 
@@ -227,7 +227,7 @@
                 var tagText = $.trim(tag.text());
                 _removeTagFromDataField(tagData, separator, tagText);
                 tag.remove();
-                that.options.callback.call(tagDataCurrent, tagData.val(), null, tagText);
+                that.options.callback.call(tagData, tagDataCurrent, tagData.val(), null, tagText);
             });
 
             // If the control already has some tags in it
