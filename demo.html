@@ -43,6 +43,7 @@
                     <input type="text" class="form-control tag-input narrow" name="tags3" id="tags3" placeholder="Enter tags" value="cat|catfish|dog|dogfish|fish">
                 </div>
             </form>
+            <pre id="console"></pre>
         </div> <!-- /container -->
         <script type="text/javascript" src="lib/js/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
@@ -51,6 +52,8 @@
         <script type="text/javascript">
 
             $(function(){
+
+                var screenConsole = $('#console');
 
                 // Instantiate the Bloodhound suggestion engine
                 var tags = new Bloodhound({
@@ -76,6 +79,9 @@
                     typeaheadDatasetOptions: {
                         displayKey: 'tag',
                         source: tags.ttAdapter()
+                    },
+                    callback: function(previousTagData, newTagData, addedTags, removedTags) {
+                        screenConsole.append('Previous: ' + previousTagData + ', New: ' + newTagData + ', Added: ' + addedTags + ', Removed: ' + removedTags + '\n');
                     }
                 });
 
