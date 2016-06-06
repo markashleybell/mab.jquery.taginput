@@ -21,6 +21,41 @@ test('inherits placeholder attribute', function() {
     equal(placeholder3, 'Enter tags', 'test input 3 placeholder attribute equals "Enter tags"');
 });
 
+test('add callback', function() {  
+    var result = {};
+    $('#test-input-4').tagInput({
+        onTagDataChanged: function(added, removed) {
+            result.value = this.val() || null;
+            result.added = added;
+            result.removed = removed;
+        }
+    });  
+    var tagInput = $('#test-input-4').parent().find('.mab-jquery-taginput-input').first();
+    tagInput.val('test');
+    // Simulate hitting ENTER
+    tagInput.trigger(jQuery.Event('keydown', { which: 13, keyCode: 13 }));
+    equal(result.value, 'test', 'test input 4 has value \'test\'');
+    equal(result.added, 'test', 'added callback parameter is \'test\'');
+    equal(result.removed, null, 'removed callback parameter is null');
+});
+
+test('remove callback', function() {  
+    var result = {};
+    $('#test-input-5').tagInput({
+        onTagDataChanged: function(added, removed) {
+            result.value = this.val() || null;
+            result.added = added;
+            result.removed = removed;
+        }
+    });
+    var tagInput = $('#test-input-5').parent().find('.mab-jquery-taginput-input').first();
+    // Simulate hitting BACKSPACE
+    tagInput.trigger(jQuery.Event('keydown', { which: 8, keyCode: 8 }));
+    equal(result.value, 'cat', 'test input 5 has value \'cat\'');
+    equal(result.added, null, 'added callback parameter is null');
+    equal(result.removed, 'dog', 'removed callback parameter is \'dog\'');
+});
+
 QUnit.done(function() {
     // alert('test');
 });
