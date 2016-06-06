@@ -151,7 +151,7 @@
                     // Stop the form being submitted and prevent event bubbling
                     e.preventDefault();
                     e.stopPropagation();
-                    var newTag = input.val();
+                    var newTag = $.trim(input.val());
                     // Get the index of the tag in the tag data (-1 if not already present)
                     var tagIndex = $.inArray(newTag, tagData.val().split(separator));
                     // Don't allow the addition of duplicate tags unless explicitly specified
@@ -178,7 +178,7 @@
                 // we don't want to prevent the default action, which is deleting a character)
                 if(e.keyCode == KEYCODES.BACKSPACE && $.trim(input.val()) === '') {
                     // Remove the last tag span before the hidden data input
-                    var tagRemoved = tagData.prev('span.label').text();
+                    var tagRemoved = $.trim(tagData.prev('span.label').text());
                     tagData.prev('span.label').remove();
                     _removeLastTagFromDataField(tagData, separator);
                     // Reset the tag input
