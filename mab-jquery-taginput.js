@@ -15,7 +15,10 @@
             typeahead: false,
             typeaheadOptions: null,
             typeaheadDatasetOptions: null,
-            callback: function(){}
+            onTagDataChanged: function(added, removed) {
+                // Within the callback, 'this' will be the tag data input instance, 
+                // so updated tag data can be accessed using this.val()
+            }
         },
         // Lookup variables to make keycode handling more readable
         KEYCODES = {
@@ -107,10 +110,12 @@
         init: function() {
             // Boolean to determine whether typeahead.js integration is enabled
             var usingTypeahead = this.options.typeahead;
-            // boolean to determine whether the same tag can be added to the input more than once
+            // Boolean to determine whether the same tag can be added to the input more than once
             var allowDuplicates = this.options.allowDuplicates;
             // Character to use as a separator for the tag data (default is pipe '|')
             var separator = this.options.tagDataSeparator;
+            // Callback function to be fired on tag add/remove
+            var onTagDataChanged = this.options.onTagDataChanged;
 
             // Replace the original input with the tag input HTML
             var originalInput = $(this.element);
@@ -136,9 +141,6 @@
                     return false;
             });
 
-            // For callback
-            var that = this;
-
             // Handle keydown events on the tag text input
             tagInput.on('keydown typeahead:selected', function(e) {
                 // Cache the reference to the input
@@ -154,15 +156,13 @@
                     var tagIndex = $.inArray(newTag, tagData.val().split(separator));
                     // Don't allow the addition of duplicate tags unless explicitly specified
                     if(allowDuplicates || (tagIndex === -1)) {
-                        // Preserve current data for callback
-                        var tagDataCurrent = tagData.val() || null;
                         // Insert a new tag span before the hidden input
                         tagData.before(_createTag(newTag));
                         _addTagToDataField(tagData, separator, newTag);
                         // Reset the tag input
                         _resetTagInput(input, usingTypeahead);
                         input.attr('placeholder', '');
-                        that.options.callback.call(tagData, tagDataCurrent, tagData.val(), newTag, null);
+                        onTagDataChanged.call(tagData, newTag, null);
                     } else {
                         // Highlight the duplicate tag
                         var existing = tagInputContainer.find('span.label[data-tag="' + newTag + '"]');
@@ -177,18 +177,15 @@
                 // If backspace is hit and there's nothing in the input (if the input *isn't* empty, 
                 // we don't want to prevent the default action, which is deleting a character)
                 if(e.keyCode == KEYCODES.BACKSPACE && $.trim(input.val()) === '') {
-                    // Preserve current data for callback
-                    var tagDataCurrent = tagData.val() || null;
                     // Remove the last tag span before the hidden data input
                     var tagRemoved = tagData.prev('span.label').text();
                     tagData.prev('span.label').remove();
-
                     _removeLastTagFromDataField(tagData, separator);
                     // Reset the tag input
                     _resetTagInput(input, usingTypeahead);
                     if(tagData.val() === '')
                         input.attr('placeholder', originalPlaceHolder);
-                    that.options.callback.call(tagData, tagDataCurrent, tagData.val(), null, tagRemoved);
+                    onTagDataChanged.call(tagData, null, tagRemoved);
                 }
             });
 
@@ -220,14 +217,12 @@
                 // Don't bubble the click event up to the input container
                 // This would cause the text input to be shown by the container's click event
                 e.stopPropagation();
-                // Preserve current data for callback
-                var tagDataCurrent = tagData.val() || null;
                 // Get the text of the tag to be removed (parent of this is the label span)
                 var tag = $(this).parent();
                 var tagText = $.trim(tag.text());
                 _removeTagFromDataField(tagData, separator, tagText);
                 tag.remove();
-                that.options.callback.call(tagData, tagDataCurrent, tagData.val() || null, null, tagText);
+                onTagDataChanged.call(tagData, null, tagText);
             });
 
             // If the control already has some tags in it
