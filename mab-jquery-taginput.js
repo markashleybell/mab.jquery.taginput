@@ -155,7 +155,7 @@
                     // Don't allow the addition of duplicate tags unless explicitly specified
                     if(allowDuplicates || (tagIndex === -1)) {
                         // Preserve current data for callback
-                        var tagDataCurrent = tagData.val();
+                        var tagDataCurrent = tagData.val() || null;
                         // Insert a new tag span before the hidden input
                         tagData.before(_createTag(newTag));
                         _addTagToDataField(tagData, separator, newTag);
@@ -178,7 +178,7 @@
                 // we don't want to prevent the default action, which is deleting a character)
                 if(e.keyCode == KEYCODES.BACKSPACE && $.trim(input.val()) === '') {
                     // Preserve current data for callback
-                    var tagDataCurrent = tagData.val();
+                    var tagDataCurrent = tagData.val() || null;
                     // Remove the last tag span before the hidden data input
                     var tagRemoved = tagData.prev('span.label').text();
                     tagData.prev('span.label').remove();
@@ -221,13 +221,13 @@
                 // This would cause the text input to be shown by the container's click event
                 e.stopPropagation();
                 // Preserve current data for callback
-                var tagDataCurrent = tagData.val();
+                var tagDataCurrent = tagData.val() || null;
                 // Get the text of the tag to be removed (parent of this is the label span)
                 var tag = $(this).parent();
                 var tagText = $.trim(tag.text());
                 _removeTagFromDataField(tagData, separator, tagText);
                 tag.remove();
-                that.options.callback.call(tagData, tagDataCurrent, tagData.val(), null, tagText);
+                that.options.callback.call(tagData, tagDataCurrent, tagData.val() || null, null, tagText);
             });
 
             // If the control already has some tags in it
