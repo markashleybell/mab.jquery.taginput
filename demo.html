@@ -43,6 +43,10 @@
                     <input type="text" class="form-control tag-input narrow" name="tags3" id="tags3" placeholder="Enter tags" value="cat|catfish|dog|dogfish|fish">
                 </div>
                 <div class="form-group">
+                    <label for="tags2">No typeahead</label>
+                    <input type="text" class="form-control tag-input-basic" name="tags4" id="tags4" placeholder="Enter tags" value="">
+                </div>
+                <div class="form-group">
                     <label for="tags2">Callback data</label>
                     <pre id="console">Add or remove a tag from one of the inputs above...
 </pre>
@@ -56,8 +60,6 @@
         <script type="text/javascript">
 
             $(function(){
-
-                var screenConsole = $('#console');
 
                 // Instantiate the Bloodhound suggestion engine
                 var tags = new Bloodhound({
@@ -74,6 +76,15 @@
 
                 tags.initialize();
 
+                // Set up an on-screen console for the demo
+                var screenConsole = $('#console');
+
+                // Write callback data to the screen when tags are added or removed in demo inputs
+                var logCallbackDataToConsole = function(added, removed) {
+                    screenConsole.append('Tag Data: ' + (this.val() || null) + ', Added: ' + added + ', Removed: ' + removed + '\n');
+                };
+
+                // Create typeahead-enabled tag inputs
                 $('.tag-input').tagInput({
                     allowDuplicates: false,
                     typeahead: true,
@@ -84,9 +95,12 @@
                         displayKey: 'tag',
                         source: tags.ttAdapter()
                     },
-                    onTagDataChanged: function(added, removed) {
-                        screenConsole.append('Tag Data: ' + (this.val() || null) + ', Added: ' + added + ', Removed: ' + removed + '\n');
-                    }
+                    onTagDataChanged: logCallbackDataToConsole
+                });
+
+                // Create basic tag inputs with no typeahead
+                $('.tag-input-basic').tagInput({
+                    onTagDataChanged: logCallbackDataToConsole
                 });
 
                 $('#results a[rel="external"]').attr('target', '_blank');
