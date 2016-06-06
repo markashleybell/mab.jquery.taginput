@@ -80,8 +80,8 @@
                         displayKey: 'tag',
                         source: tags.ttAdapter()
                     },
-                    callback: function(previousTagData, newTagData, addedTags, removedTags) {
-                        screenConsole.append('Previous: ' + previousTagData + ', New: ' + newTagData + ', Added: ' + addedTags + ', Removed: ' + removedTags + '\n');
+                    onTagDataChanged: function(added, removed) {
+                        screenConsole.append('Tag Data: ' + (this.val() || null) + ', Added: ' + added + ', Removed: ' + removed + '\n');
                     }
                 });
 
