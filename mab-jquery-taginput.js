@@ -29,14 +29,12 @@
 
     // The actual plugin constructor
     function Plugin(element, options) {
-        this.element = element;
-        
         this.options = $.extend({}, defaults, options) ;
 
         this._defaults = defaults;
         this._name = pluginName;
 
-        this.init();
+        this.input = this.init(element).find('input.mab-jquery-taginput-data');
     }
 
     // Remove all entries from an array with a specific value
@@ -107,7 +105,7 @@
 
     Plugin.prototype = {
 
-        init: function() {
+        init: function(element) {
             // Boolean to determine whether typeahead.js integration is enabled
             var usingTypeahead = this.options.typeahead;
             // Boolean to determine whether the same tag can be added to the input more than once
@@ -118,7 +116,7 @@
             var onTagDataChanged = this.options.onTagDataChanged;
 
             // Replace the original input with the tag input HTML
-            var originalInput = $(this.element);
+            var originalInput = $(element);
             var tagInputContainer = _createTagInput(originalInput, separator);
             originalInput.replaceWith(tagInputContainer);
 
@@ -232,6 +230,8 @@
                 // Initially blur the text input so it's hidden on load
                 tagInputContainer.find('input[type=text]').blur();
             }
+
+            return tagInputContainer;
         }
     };
 
@@ -239,9 +239,10 @@
     // preventing against multiple instantiations
     $.fn[pluginName] = function (options) {
         return this.each(function() {
-            if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" + pluginName,
-                new Plugin(this, options));
+            var input = $(this);
+            if (!input.data("plugin_" + pluginName)) {
+                var instance = new Plugin(this, options);
+                instance.input.data("plugin_" + pluginName, instance);
             }
         });
     };
