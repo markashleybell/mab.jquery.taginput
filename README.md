@@ -1,6 +1,6 @@
 # mab.jquery.taginput
 
-Turns a text input into a tag input.
+Turns a text input into a tag input. [Click here to see a live demo](https://markashleybell.github.io/mab.jquery.taginput/).
 
 ## Basic Example
 
