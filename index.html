@@ -93,7 +93,7 @@
                         highlight: true
                     },
                     typeaheadDatasetOptions: {
-                        displayKey: 'tag',
+                        display: function(d) { return d.tag; },
                         source: tags.ttAdapter()
                     },
                     onTagDataChanged: logCallbackDataToConsole

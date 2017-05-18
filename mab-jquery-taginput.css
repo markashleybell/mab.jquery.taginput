@@ -7,68 +7,50 @@
   font-size: 14px;
   line-height: 1.21;
   vertical-align: top;
-  margin-bottom: 6px;
-}
-
-.mab-jquery-taginput input.h {
-  width: 1px;
-}
-
-.mab-jquery-taginput input:-moz-placeholder {
-  color: #999999;
-}
-
-.mab-jquery-taginput input::-moz-placeholder {
-  color: #999999;
-  opacity: 1;
-}
-
-.mab-jquery-taginput input:-ms-input-placeholder {
-  color: #999999;
-}
-
-.mab-jquery-taginput input::-webkit-input-placeholder {
-  color: #999999;
-}
-
-.mab-jquery-taginput input::-ms-clear {
-  display: none;
-}
+  margin-bottom: 6px; }
+  .mab-jquery-taginput input.h {
+    width: 1px; }
+  .mab-jquery-taginput input:-moz-placeholder {
+    color: #999999; }
+  .mab-jquery-taginput input::-moz-placeholder {
+    color: #999999;
+    opacity: 1; }
+  .mab-jquery-taginput input:-ms-input-placeholder {
+    color: #999999; }
+  .mab-jquery-taginput input::-webkit-input-placeholder {
+    color: #999999; }
+  .mab-jquery-taginput input::-ms-clear {
+    display: none; }
 
 .mab-jquery-taginput.form-control {
   height: auto;
-  padding-bottom: 0;
-}
+  padding-bottom: 0; }
 
 .mab-jquery-taginput .label {
   font-size: 1em;
   padding-right: 0.5em;
   margin-right: 5px;
   display: inline-block;
-  margin-bottom: 6px;
-}
+  margin-bottom: 6px; }
 
 .mab-jquery-taginput a {
   text-decoration: none;
-  color: #fff;
-}
+  color: #fff; }
 
 .mab-jquery-taginput .glyphicon {
   font-size: 0.85em;
   vertical-align: -1px;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
 .tt-query {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
 
 .tt-hint {
-  color: #999;
-}
+  color: #999; }
 
-.tt-dropdown-menu {
+.tt-menu {
   min-width: 160px;
   padding: 5px 0;
   margin: 2px 0 0;
@@ -76,20 +58,18 @@
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
-  background-clip: padding-box;
-}
+  background-clip: padding-box; }
 
-.tt-suggestion p {
+.tt-suggestion {
   margin: 0;
   padding: 3px 20px;
   line-height: 20px;
   clear: both;
-  white-space: nowrap;
-}
+  white-space: nowrap; }
 
 .tt-suggestion.tt-cursor {
   color: #fff;
-  background-color: #428bca;
-}
+  background-color: #428bca; }
