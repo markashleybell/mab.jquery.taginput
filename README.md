@@ -1,3 +1,9 @@
+# This repository is no longer maintained!
+
+If you need a more up-to-date library for rendering tag inputs, please try [MAB.Bootstrap.TagInput](https://github.com/markashleybell/MAB.Bootstrap.TagInput).
+
+---
+
 # mab.jquery.taginput
 
 Turns a text input into a tag input. [Click here to see a live demo](https://markashleybell.github.io/mab.jquery.taginput/).
